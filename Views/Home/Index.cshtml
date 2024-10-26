@@ -1,0 +1,44 @@
+﻿@model CafeMenuProject.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="jumbotron text-center bg-primary text-white">
+    <h1 class="display-4">Cafe Menu</h1>
+    <p class="lead">Lezzetli yemekler ve içecekler için doğru adrestesiniz!</p>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form asp-action="Index" method="get" class="form-inline">
+                <label class="mr-2 text-primary">Para Birimi:</label>
+                <select name="currency" onchange="this.form.submit()" class="form-control mr-2 custom-select">
+                    <option value="TRY" selected="@(Model.SelectedCurrency == "TRY")">TRY</option>
+                    <option value="USD" selected="@(Model.SelectedCurrency == "USD")">USD</option>
+                    <option value="EUR" selected="@(Model.SelectedCurrency == "EUR")">EUR</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm product-card">
+                    <img src="@("/images/" + product.ImagePath)" class="card-img-top" alt="@product.ProductName">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@product.ProductName</h5>
+                        <p class="card-text"><small class="text-muted">Kategori: @product.Category.CategoryName</small></p>
+                        <p class="card-text font-weight-bold">Fiyat: @product.Price.ToString("F2") @Model.SelectedCurrency</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <button class="btn btn-primary btn-block">Sepete Ekle</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

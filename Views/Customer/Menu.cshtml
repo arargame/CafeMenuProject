@@ -1,0 +1,33 @@
+@using CafeMenuProject.ViewModels
+@model CustomerMenuViewModel
+
+<h2>Cafe Menü</h2>
+
+<form asp-action="Menu" method="get">
+    <select name="currency" onchange="this.form.submit()" class="form-control">
+        <option value="TRY" selected="@(Model.SelectedCurrency == "TRY")">TRY</option>
+        <option value="USD" selected="@(Model.SelectedCurrency == "USD")">USD</option>
+        <option value="EUR" selected="@(Model.SelectedCurrency == "EUR")">EUR</option>
+    </select>
+</form>
+
+@foreach (var category in Model.Categories)
+{
+    <h3>@category.CategoryName</h3>
+    <div class="row">
+        @foreach (var product in category.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@product.ImagePath" class="card-img-top" alt="@product.ProductName">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.ProductName</h5>
+                        <p class="card-text">
+                            Fiyat: @product.Price.ToString("F2") @Model.SelectedCurrency
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
